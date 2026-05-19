@@ -20,6 +20,8 @@ html, body {
   height: 93dvh;
   padding: clamp(4px, 1vmin, 12px);
   gap: clamp(4px, 1vmin, 8px);
+  row-gap: clamp(20px, 1vmin, 20px);
+  column-gap: clamp(4px, 1vmin, 8px);
 }
 
 /* ── Top row ── */
