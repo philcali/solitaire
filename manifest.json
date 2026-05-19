@@ -2,7 +2,7 @@
   "name": "Solitaire",
   "short_name": "Solitaire",
   "description": "Classic Klondike Solitaire card game",
-  "start_url": "/index.html",
+  "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#1a6b30",
