@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a6b30">
+  <title>Solitaire</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-board">
+    <!-- Top row: stock, waste, empty space, foundations -->
+    <div class="top-row">
+      <div class="stock-area">
+        <div class="pile-slot stock" id="stock" title="Click or tap to draw"></div>
+        <div class="pile-slot waste" id="waste"></div>
+      </div>
+      <div class="foundation-area">
+        <div class="pile-slot foundation" id="foundation-0" data-foundation="0" title="Hearts"></div>
+        <div class="pile-slot foundation" id="foundation-1" data-foundation="1" title="Diamonds"></div>
+        <div class="pile-slot foundation" id="foundation-2" data-foundation="2" title="Clubs"></div>
+        <div class="pile-slot foundation" id="foundation-3" data-foundation="3" title="Spades"></div>
+      </div>
+    </div>
+
+    <!-- Bottom row: 7 tableau columns -->
+    <div class="tableau" id="tableau-0" data-tableau="0"></div>
+    <div class="tableau" id="tableau-1" data-tableau="1"></div>
+    <div class="tableau" id="tableau-2" data-tableau="2"></div>
+    <div class="tableau" id="tableau-3" data-tableau="3"></div>
+    <div class="tableau" id="tableau-4" data-tableau="4"></div>
+    <div class="tableau" id="tableau-5" data-tableau="5"></div>
+    <div class="tableau" id="tableau-6" data-tableau="6"></div>
+
+  </div>
+
+  <!-- Controls (outside grid so it doesn't stretch columns) -->
+  <div class="controls">
+    <button id="new-game" title="New Game">New Game</button>
+    <button id="undo-btn" title="Undo">Undo</button>
+  </div>
+
+  <!-- Win overlay -->
+  <div class="win-overlay" id="win-overlay" hidden>
+    <div class="win-dialog">
+      <h1 id="overlay-title">You Win!</h1>
+      <p class="win-subtitle" id="overlay-subtitle">Congratulations!</p>
+      <button id="play-again">Play Again</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+  <script src="sw.js"></script>
+</body>
+</html>

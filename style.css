@@ -1,0 +1,406 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #1a6b30;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.game-board {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: repeat(7, 1fr);
+  height: 95dvh;
+  padding: clamp(4px, 1vmin, 12px);
+  gap: clamp(4px, 1vmin, 8px);
+}
+
+/* ── Top row ── */
+
+.top-row {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: clamp(4px, 1vmin, 8px);
+  min-height: clamp(56px, 8.4vmin, 112px);
+}
+
+.stock-area {
+  display: flex;
+  gap: clamp(4px, 1vmin, 8px);
+  align-items: flex-start;
+}
+
+.foundation-area {
+  display: flex;
+  gap: clamp(4px, 1vmin, 8px);
+  align-items: flex-start;
+}
+
+/* ── Pile slots ── */
+
+.pile-slot {
+  width: clamp(44px, 6vmin, 80px);
+  height: clamp(62px, 8.4vmin, 112px);
+  border-radius: clamp(2px, 0.5vmin, 4px);
+  position: relative;
+}
+
+.pile-slot.stock {
+  border: clamp(1px, 0.2vmin, 2px) solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pile-slot.stock:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.pile-slot.stock.empty::after {
+  content: '↻';
+  font-size: clamp(12px, 2.5vmin, 20px);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Foundation placeholders */
+.foundation {
+  border: clamp(1px, 0.2vmin, 2px) dashed rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foundation::before {
+  content: attr(data-suit);
+  font-size: clamp(8px, 2vmin, 16px);
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Tableau columns ── */
+
+.tableau {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 80px;
+}
+
+/* Empty column placeholder — rendered by JS when needed */
+
+/* ── Cards ── */
+
+.card {
+  width: clamp(44px, 6vmin, 80px);
+  height: clamp(62px, 8.4vmin, 112px);
+  background: white;
+  border-radius: clamp(2px, 0.5vmin, 4px);
+  box-shadow: 0 clamp(1px, 0.2vmin, 1px) clamp(2px, 0.5vmin, 2px) rgba(0, 0, 0, 0.25);
+  position: absolute;
+  cursor: grab;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.card.face-down {
+  background: linear-gradient(135deg, #1a3a8a, #2255cc);
+  border: clamp(1px, 0.15vmin, 1px) solid rgba(255, 255, 255, 0.3);
+  cursor: default;
+}
+
+.card.face-down::after {
+  content: '';
+  position: absolute;
+  inset: clamp(2px, 0.4vmin, 2px);
+  border: clamp(1px, 0.1vmin, 1px) solid rgba(255, 255, 255, 0.15);
+  border-radius: clamp(1px, 0.3vmin, 1px);
+}
+
+.card.red {
+  color: #cc0000;
+}
+
+.card.black {
+  color: #111;
+}
+
+.card.selected {
+  box-shadow: 0 0 clamp(2px, 1vmin, 4px) clamp(1px, 0.3vmin, 3px) #ffcc00;
+  z-index: 100;
+}
+
+.card.dragging {
+  z-index: 1000;
+  box-shadow: 0 clamp(2px, 1vmin, 4px) clamp(4px, 2vmin, 8px) rgba(0, 0, 0, 0.4);
+  cursor: grabbing;
+  transition: none;
+}
+
+/* Card content */
+.card-corner {
+  position: absolute;
+  font-size: clamp(6px, 1.1vmin, 12px);
+  font-weight: bold;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.card-corner-top {
+  top: clamp(1px, 0.25vmin, 1px);
+  left: clamp(1px, 0.25vmin, 1px);
+}
+
+.card-corner-bottom {
+  bottom: clamp(1px, 0.25vmin, 1px);
+  right: clamp(1px, 0.25vmin, 1px);
+  transform: rotate(180deg);
+}
+
+.card-suit {
+  display: block;
+  font-size: clamp(8px, 1.3vmin, 14px);
+  margin-top: 0.05vmin;
+}
+
+.card-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(10px, 3vmin, 26px);
+  pointer-events: none;
+}
+
+/* ── Tableau card stacking ── */
+
+.tableau .card {
+  position: absolute;
+}
+
+/* ── Drop target highlighting ── */
+
+.pile-slot.drop-target,
+.tableau.drop-target {
+  border-color: #4caf50 !important;
+  background: rgba(76, 175, 80, 0.15) !important;
+}
+
+/* ── Controls ── */
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.controls button {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1a6b30;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.controls button:hover {
+  background: white;
+}
+
+.controls button:active {
+  transform: scale(0.97);
+}
+
+/* ── Landing page ── */
+
+.landing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  height: 100dvh;
+  background: linear-gradient(135deg, #1a6b30, #0d4a1e);
+  overflow: hidden;
+  position: relative;
+}
+
+.landing-content {
+  text-align: center;
+  z-index: 10;
+}
+
+.landing-title {
+  font-size: clamp(32px, 8vmin, 64px);
+  color: white;
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.landing-subtitle {
+  font-size: clamp(14px, 3vmin, 24px);
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 32px;
+}
+
+.variant-selector {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  padding: 0 16px;
+}
+
+.variant-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 100px;
+  max-width: 140px;
+}
+
+.variant-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.variant-card.selected {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.variant-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.variant-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.variant-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  display: block;
+}
+
+.start-btn {
+  background: white;
+  color: #1a6b30;
+  border: none;
+  padding: 12px 48px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.start-btn:active {
+  transform: scale(0.98);
+}
+
+/* Decorative cards */
+.landing-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.card-decor {
+  position: absolute;
+  font-size: clamp(48px, 12vmin, 120px);
+  color: rgba(255, 255, 255, 0.06);
+  font-weight: bold;
+}
+
+.card-decor-1 { top: 5%; left: 5%; transform: rotate(-15deg); }
+.card-decor-2 { top: 15%; right: 8%; transform: rotate(10deg); }
+.card-decor-3 { bottom: 10%; left: 10%; transform: rotate(20deg); }
+.card-decor-4 { bottom: 20%; right: 5%; transform: rotate(-8deg); }
+
+/* ── Win overlay ── */
+
+.win-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.win-overlay[hidden] {
+  display: none;
+}
+
+.win-dialog {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 40px;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.win-dialog h1 {
+  font-size: 28px;
+  color: #1a6b30;
+  margin-bottom: 8px;
+}
+
+.win-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.win-dialog button {
+  padding: 10px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: #1a6b30;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.win-dialog button:hover {
+  background: #155a26;
+}

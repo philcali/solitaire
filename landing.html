@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Solitaire</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="landing">
+    <div class="landing-content">
+      <h1 class="landing-title">Solitaire</h1>
+      <p class="landing-subtitle">Classic Klondike</p>
+
+      <div class="variant-selector">
+        <div class="variant-card selected" data-variant="klondike">
+          <div class="variant-icon">&#9829;</div>
+          <span class="variant-name">Klondike</span>
+          <span class="variant-desc">Classic 1-card draw</span>
+        </div>
+        <div class="variant-card" data-variant="freecell">
+          <div class="variant-icon">&#9824;</div>
+          <span class="variant-name">Freecell</span>
+          <span class="variant-desc">All 4 free cells</span>
+        </div>
+        <div class="variant-card" data-variant="pyramid">
+          <div class="variant-icon">&#9827;</div>
+          <span class="variant-name">Pyramid</span>
+          <span class="variant-desc">Remove pairs of 13</span>
+        </div>
+      </div>
+
+      <button id="start-btn" class="start-btn">Start Game</button>
+    </div>
+
+    <div class="landing-decor">
+      <div class="card-decor card-decor-1">&#9829;</div>
+      <div class="card-decor card-decor-2">&#9824;</div>
+      <div class="card-decor card-decor-3">&#9830;</div>
+      <div class="card-decor card-decor-4">&#9827;</div>
+    </div>
+  </div>
+
+  <script src="landing.js"></script>
+</body>
+</html>
