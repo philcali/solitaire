@@ -85,7 +85,7 @@ html, body {
 
 .foundation::before {
   content: attr(data-suit);
-  font-size: clamp(8px, 2vmin, 16px);
+  font-size: clamp(14px, 2.5vmin, 20px);
   color: rgba(255, 255, 255, 0.25);
 }
 
@@ -153,7 +153,7 @@ html, body {
 /* Card content */
 .card-corner {
   position: absolute;
-  font-size: clamp(6px, 1.1vmin, 12px);
+  font-size: clamp(12px, 2.5vmin, 18px);
   font-weight: bold;
   line-height: 1;
   pointer-events: none;
@@ -172,7 +172,7 @@ html, body {
 
 .card-suit {
   display: block;
-  font-size: clamp(8px, 1.3vmin, 14px);
+  font-size: clamp(14px, 2vmin, 20px);
   margin-top: 0.05vmin;
 }
 
