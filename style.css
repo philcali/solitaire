@@ -50,9 +50,9 @@ html, body {
 /* ── Pile slots ── */
 
 .pile-slot {
-  width: clamp(44px, 6vmin, 80px);
-  height: clamp(62px, 8.4vmin, 112px);
-  border-radius: clamp(2px, 0.5vmin, 4px);
+  width: clamp(56px, 8vmin, 90px);
+  height: clamp(78px, 11vmin, 126px);
+  border-radius: clamp(3px, 0.75vmin, 6px);
   position: relative;
 }
 
@@ -103,10 +103,10 @@ html, body {
 /* ── Cards ── */
 
 .card {
-  width: clamp(44px, 6vmin, 80px);
-  height: clamp(62px, 8.4vmin, 112px);
+  width: clamp(56px, 8vmin, 90px);
+  height: clamp(78px, 11vmin, 126px);
   background: white;
-  border-radius: clamp(2px, 0.5vmin, 4px);
+  border-radius: clamp(3px, 0.75vmin, 6px);
   box-shadow: 0 clamp(1px, 0.2vmin, 1px) clamp(2px, 0.5vmin, 2px) rgba(0, 0, 0, 0.25);
   position: absolute;
   cursor: grab;

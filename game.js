@@ -336,7 +336,7 @@ function renderTableau() {
     for (let j = 0; j < col.length; j++) {
       const cardEl = createCardEl(col[j]);
       cardEl.style.position = 'absolute';
-      cardEl.style.top = `${j * 2.5}vmin`;
+      cardEl.style.top = `${j * 3.5}vmin`;
       cardEl.dataset.source = `tableau-${i}`;
       cardEl.dataset.cardIndex = j;
 
